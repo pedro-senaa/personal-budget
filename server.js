@@ -3,4 +3,12 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => `server running on port ${PORT}`);
+
+
+app.get('', (req, res, next) => {
+    console.log('server is running smooth as butter!')
+})
+
+app.listen(PORT, () => {
+    console.log(`server running on port ${PORT}`);
+});
