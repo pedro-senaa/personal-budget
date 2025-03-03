@@ -11,7 +11,7 @@ class Envelope {
 
 
 function envelopeChecker(envelope) {
-    if (!envelope.name || !envelope.amount) {
+    if (!envelope.name || !envelope.amount || typeof envelope.name !== 'string' || typeof envelope.amount !== 'number') {
         return false;
     } else {
         return true;
