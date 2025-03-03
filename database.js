@@ -1,5 +1,11 @@
-let id = 0;
-let envelopesDatabase = [];
+let id = 1;
+let envelopesDatabase = [
+    {
+        "name": "1",
+        "amount": 1,
+        "id": 0
+    }
+]
 
 class Envelope {
     constructor(name, amount) {
@@ -23,6 +29,7 @@ function addEnvelopeToDatabase(envelope) {
     if (isValidEnvelope) {
         envelope.id = id++;
         envelopesDatabase.push(envelope);
+        return envelopesDatabase;
     } else {
         return null
     }
@@ -50,6 +57,7 @@ function deleteEnvelopeById(id) {
 
 // expects envelope to have .id key!!!!!!!!!
 function updateEnvelope(envelope) {
+    // console.log(envelope)
     const index = envelopesDatabase.findIndex(envelopeObj => envelopeObj.id === envelope.id);
     if (index !== -1) {
         envelopesDatabase[index].name = envelope.name;
