@@ -1,8 +1,8 @@
 let id = 1;
 let envelopesDatabase = [
     {
-        "name": "1",
-        "amount": 1,
+        "name": "groceries",
+        "amount": 1000,
         "id": 0
     }
 ]
@@ -57,7 +57,6 @@ function deleteEnvelopeById(id) {
 
 // expects envelope to have .id key!!!!!!!!!
 function updateEnvelope(envelope) {
-    // console.log(envelope)
     const index = envelopesDatabase.findIndex(envelopeObj => envelopeObj.id === envelope.id);
     if (index !== -1) {
         envelopesDatabase[index].name = envelope.name;
@@ -67,6 +66,38 @@ function updateEnvelope(envelope) {
         return false;
     };
     ;
+};
+
+function subtractEnvelopeAmount(subtract, envelopeObj) {
+    if (envelopeObj.amount - subtract < 0) {
+        console.log(`Not enough money: amount: ${envelopeObj.amount}; request to subtract: ${subtract}.`)
+        return;
+    }
+
+    const updatedAmount = envelopeObj.amount - subtract;
+    envelopeObj.amount = updatedAmount;
+
+    const updatedEnvelope = updateEnvelope(envelopeObj);
+    if (!updatedEnvelope) {
+        envelopeObj.amount += subtract;
+        console.log('did not manage to update');
+        return;
+    }
+
+    return updatedEnvelope;
+};
+
+function addEnvelopeAmount(add, envelopeObj) {
+    const updatedAmount = envelopeObj.amount + add;
+    envelopeObj.amount = updatedAmount;
+    const updatedEnvelope = updateEnvelope(envelopeObj);
+    if (!updatedEnvelope) {
+        envelopeObj.amount -= add;
+        console.log('did not manage to update');
+        return;
+    };
+
+    return updatedEnvelope;
 }
 
-module.exports = { id, envelopesDatabase, Envelope, envelopeChecker, addEnvelopeToDatabase, findEnvelopeById, deleteEnvelopeById, updateEnvelope };
+module.exports = { id, envelopesDatabase, Envelope, envelopeChecker, addEnvelopeToDatabase, findEnvelopeById, deleteEnvelopeById, updateEnvelope, subtractEnvelopeAmount, addEnvelopeAmount };
